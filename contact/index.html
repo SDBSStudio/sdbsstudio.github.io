@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SDBS Studio Development - Contact</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="icon" type="image/x-icon" href="/assets/image/favicon.ico" />
+    <style>
+      .main-content {
+        padding: 3rem 0 5rem;
+        max-width: 600px;
+        margin: 0 auto;
+        color: #222;
+      }
+
+      h2.page-title {
+        font-weight: 700;
+        font-size: 2rem;
+        color: #1e3a8a;
+        margin-bottom: 2rem;
+        text-align: center;
+        opacity: 0;
+        animation: fadeInUp 1s forwards;
+      }
+
+      form.contact-form {
+        background: #fff;
+        padding: 2rem 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        opacity: 0;
+        animation: fadeInUp 1s 0.3s forwards;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+        border: 1.5px solid #ccc;
+        border-radius: 8px;
+        transition: border-color 0.3s ease;
+        resize: vertical;
+      }
+
+      input[type="text"]:focus,
+      input[type="email"]:focus,
+      textarea:focus {
+        border-color: #1e3a8a;
+        outline: none;
+        box-shadow: 0 0 6px rgba(0, 119, 204, 0.5);
+      }
+
+      textarea {
+        min-height: 120px;
+        max-height: 300px;
+      }
+
+      button[type="submit"] {
+        background-color: #1e3a8a;
+        color: #fff;
+        font-weight: 700;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 119, 204, 0.4);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        user-select: none;
+      }
+
+      button[type="submit"]:hover,
+      button[type="submit"]:focus {
+        background-color: #1e3a8a;
+        box-shadow: 0 6px 16px rgba(0, 95, 163, 0.6);
+        outline: none;
+      }
+
+      .captcha-box {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .captcha-code {
+        font-weight: 700;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        background: #f0f4ff;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        text-align: center;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      <div class="container header-inner">
+        <a href="/" class="logo-link" aria-label="SDBS Studio Development Home">
+          <span class="studio-name">SDBS Studio Development</span>
+        </a>
+        <button
+          class="nav-toggle"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+          aria-label="Toggle navigation menu"
+        >
+          <span class="hamburger"></span>
+        </button>
+        <nav id="primary-navigation" class="nav" role="navigation">
+          <ul class="nav-list">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/games/" class="nav-link">Games</a></li>
+            <li><a href="/news/" class="nav-link">News</a></li>
+            <li><a href="/career/" class="nav-link">Career</a></li>
+            <li><a href="/about/" class="nav-link">About</a></li>
+            <li>
+              <a href="/contact/" class="nav-link" aria-current="page"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container main-content" role="main">
+      <h2 class="page-title">Contact Us</h2>
+
+      <form
+        class="contact-form"
+        action="https://docs.google.com/forms/d/e/1FAIpQLSfP4SzXDpbenObZjUGxGOnB2gcXRsAXjMFTOvrfTaTczE74eA/formResponse"
+        method="POST"
+        target="hidden_iframe"
+        onsubmit="return handleSubmit(event)"
+        novalidate
+      >
+        <input
+          type="text"
+          name="entry.279686887"
+          placeholder="Full name"
+          required
+          aria-label="Full name"
+        />
+        <input
+          type="email"
+          name="entry.916346022"
+          placeholder="Email address"
+          required
+          aria-label="Email address"
+        />
+        <textarea
+          name="entry.911657502"
+          placeholder="Your message"
+          required
+          aria-label="Your message"
+        ></textarea>
+
+        <!-- Custom CAPTCHA -->
+        <div class="captcha-box">
+          <label for="captcha-input">Please type the code below:</label>
+          <div id="captcha-code" class="captcha-code">ABC123</div>
+          <input
+            type="text"
+            id="captcha-input"
+            placeholder="Enter the code above"
+            required
+          />
+        </div>
+
+        <button type="submit">Send</button>
+      </form>
+
+      <iframe name="hidden_iframe" style="display: none"></iframe>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/scripts/footer.js"></script>
+    <script src="/scripts/nav-toggle.js"></script>
+    <script>
+      function generateCaptcha(length = 6) {
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let code = "";
+        for (let i = 0; i < length; i++) {
+          code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        document.getElementById("captcha-code").textContent = code;
+        return code;
+      }
+
+      let currentCaptcha = "";
+
+      window.onload = () => {
+        currentCaptcha = generateCaptcha();
+      };
+
+      function handleSubmit(event) {
+        const userInput = document
+          .getElementById("captcha-input")
+          .value.trim()
+          .toUpperCase();
+        const captchaDisplay = document
+          .getElementById("captcha-code")
+          .textContent.trim();
+
+        if (userInput !== captchaDisplay) {
+          alert("Incorrect CAPTCHA. Please try again.");
+          return false;
+        }
+
+        setTimeout(() => {
+          document.querySelector(".contact-form").reset();
+          currentCaptcha = generateCaptcha();
+          alert("Message sent!");
+        }, 500);
+
+        return true;
+      }
+    </script>
+  </body>
+</html>

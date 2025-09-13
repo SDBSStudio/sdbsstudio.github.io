@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SDBS Studio Development - News</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="icon" type="image/x-icon" href="/assets/image/favicon.ico" />
+    <style>
+      .main-content {
+        padding: 3rem 0 5rem;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      h2.page-title {
+        font-weight: 700;
+        font-size: 2rem;
+        color: #1e3a8a;
+        margin-bottom: 2rem;
+        text-align: center;
+        opacity: 0;
+        animation: fadeInUp 1s forwards;
+      }
+
+      .news-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        opacity: 0;
+        animation: fadeInUp 1s 0.3s forwards;
+      }
+
+      .news-item {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+        padding: 1.5rem 2rem;
+        transition: box-shadow 0.3s ease;
+      }
+
+      .news-item:hover,
+      .news-item:focus-within {
+        box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
+        outline: none;
+      }
+
+      .news-date {
+        font-size: 0.875rem;
+        color: #777;
+        margin-bottom: 0.5rem;
+        user-select: none;
+      }
+
+      .news-title {
+        font-size: 1.375rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-bottom: 0.75rem;
+        user-select: text;
+      }
+
+      .news-summary {
+        font-size: 1rem;
+        color: #444;
+        user-select: text;
+        white-space: pre-line;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      <div class="container header-inner">
+        <a href="/" class="logo-link" aria-label="SDBS Studio Development Home">
+          <span class="studio-name">SDBS Studio Development</span>
+        </a>
+        <button
+          class="nav-toggle"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+          aria-label="Toggle navigation menu"
+        >
+          <span class="hamburger"></span>
+        </button>
+        <nav id="primary-navigation" class="nav" role="navigation">
+          <ul class="nav-list">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/games/" class="nav-link">Games</a></li>
+            <li>
+              <a href="/news/" class="nav-link" aria-current="page">News</a>
+            </li>
+            <li><a href="/career/" class="nav-link">Career</a></li>
+            <li><a href="/about/" class="nav-link">About</a></li>
+            <li><a href="/contact/" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container main-content" role="main">
+      <h2 class="page-title">News</h2>
+      <ul
+        class="news-list"
+        id="news-list"
+        aria-live="polite"
+        aria-label="Daftar berita terbaru"
+      >
+        <!-- Berita akan di-render oleh JavaScript -->
+      </ul>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/scripts/footer.js"></script>
+    <script src="/scripts/nav-toggle.js"></script>
+    <script>
+      function formatDate(dateStr) {
+        const options = { year: "numeric", month: "long", day: "numeric" };
+        const date = new Date(dateStr);
+        return date.toLocaleDateString("en-US", options);
+      }
+
+      async function loadNews() {
+        try {
+          const res = await fetch("/data/news.json");
+          if (!res.ok) throw new Error("Gagal memuat data berita");
+          const news = await res.json();
+
+          const newsList = document.getElementById("news-list");
+          newsList.innerHTML = "";
+
+          news.forEach((item) => {
+            const li = document.createElement("li");
+            li.className = "news-item";
+            li.tabIndex = 0;
+            li.innerHTML = `
+            <time class="news-date" datetime="${item.date}">${formatDate(
+              item.date
+            )}</time>
+            <h3 class="news-title">${item.title}</h3>
+            <p class="news-summary">${item.summary}</p>
+          `;
+            newsList.appendChild(li);
+          });
+        } catch (error) {
+          console.error(error);
+          const newsList = document.getElementById("news-list");
+          newsList.innerHTML =
+            '<li class="news-item">Gagal memuat berita. Silakan coba lagi nanti.</li>';
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", loadNews);
+    </script>
+  </body>
+</html>

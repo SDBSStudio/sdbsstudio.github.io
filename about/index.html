@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SDBS Studio Development - About</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="icon" type="image/x-icon" href="/assets/image/favicon.ico" />
+    <style>
+      .main-content {
+        padding: 3rem 0 5rem;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        color: #222;
+      }
+
+      h2.page-title {
+        font-weight: 700;
+        font-size: 2rem;
+        color: #1e3a8a;
+        margin-bottom: 2rem;
+        text-align: center;
+        opacity: 0;
+        animation: fadeInUp 1s forwards;
+      }
+
+      .section {
+        margin-bottom: 3rem;
+        opacity: 0;
+        animation: fadeInUp 1s 0.3s forwards;
+      }
+
+      .section h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-bottom: 1rem;
+      }
+
+      .vision-mission p {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        max-width: 700px;
+        margin: 0 auto;
+        user-select: text;
+      }
+
+      .social-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .social-button {
+        background: #1e3a8a;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background 0.3s ease;
+      }
+
+      .social-button.instagram {
+        background: #e1306c;
+      }
+      .social-button.youtube {
+        background: #ff0000;
+      }
+      .social-button.tiktok {
+        background: #000000;
+      }
+
+      .social-button:hover {
+        opacity: 0.85;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      <div class="container header-inner">
+        <a href="/" class="logo-link" aria-label="SDBS Studio Development Home">
+          <span class="studio-name">SDBS Studio Development</span>
+        </a>
+        <button
+          class="nav-toggle"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+          aria-label="Toggle navigation menu"
+        >
+          <span class="hamburger"></span>
+        </button>
+        <nav id="primary-navigation" class="nav" role="navigation">
+          <ul class="nav-list">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/games/" class="nav-link">Games</a></li>
+            <li><a href="/news/" class="nav-link">News</a></li>
+            <li><a href="/career/" class="nav-link">Career</a></li>
+            <li>
+              <a href="/about/" class="nav-link" aria-current="page">About</a>
+            </li>
+            <li><a href="/contact/" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container main-content" role="main">
+      <h2 class="page-title">About Us</h2>
+
+      <section class="section vision-mission" aria-label="Sejarah SDBS Studio">
+        <h3>History</h3>
+        <p>
+          SDBS Studio Development is the new name for Qonz Network, which was
+          founded in 2020. It originally focused on Minecraft servers, but by
+          the end of 2022, it rebranded as SDBS Studio Development and shifted
+          its focus to Roblox. The name SDBS is derived from the first names of
+          four close friends of Qonz, and when interpreted, it stands for
+          "Software-Based Digital Simulation."
+        </p>
+      </section>
+
+      <section
+        class="section social-links"
+        aria-label="Media Sosial SDBS Studio"
+      >
+        <h3>Follow Us</h3>
+        <div class="social-buttons">
+          <a
+            href="https://instagram.com/sdbsstudio"
+            target="_blank"
+            rel="noopener"
+            class="social-button instagram"
+            >Instagram</a
+          >
+          <a
+            href="https://youtube.com/@sdbsstudioindonesia"
+            target="_blank"
+            rel="noopener"
+            class="social-button youtube"
+            >YouTube</a
+          >
+          <a
+            href="https://tiktok.com/@sdbsstudio"
+            target="_blank"
+            rel="noopener"
+            class="social-button tiktok"
+            >TikTok</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/scripts/footer.js"></script>
+    <script src="/scripts/nav-toggle.js"></script>
+  </body>
+</html>

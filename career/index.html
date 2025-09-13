@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SDBS Studio Development - Career</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="icon" type="image/x-icon" href="/assets/image/favicon.ico" />
+    <style>
+      .main-content {
+        padding: 3rem 0 5rem;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      h2.page-title {
+        font-weight: 700;
+        font-size: 2rem;
+        color: #1e3a8a;
+        margin-bottom: 2rem;
+        text-align: center;
+        opacity: 0;
+        animation: fadeInUp 1s forwards;
+      }
+
+      .career-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        opacity: 0;
+        animation: fadeInUp 1s 0.3s forwards;
+      }
+
+      .career-item {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+        padding: 1.5rem 2rem;
+        transition: box-shadow 0.3s ease;
+      }
+
+      .career-item:hover,
+      .career-item:focus-within {
+        box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
+        outline: none;
+      }
+
+      .career-position {
+        font-size: 1.375rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-bottom: 0.75rem;
+        user-select: text;
+      }
+
+      .career-description {
+        font-size: 1rem;
+        color: #444;
+        margin-bottom: 1rem;
+        user-select: text;
+        white-space: pre-line;
+      }
+
+      .career-skills {
+        font-weight: 600;
+        color: #222;
+        margin-bottom: 1rem;
+        user-select: text;
+      }
+
+      .apply-info {
+        font-size: 0.95rem;
+        color: #555;
+        user-select: none;
+      }
+
+      .apply-email {
+        color: #1e3a8a;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .apply-email:hover,
+      .apply-email:focus {
+        text-decoration: underline;
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      <div class="container header-inner">
+        <a href="/" class="logo-link" aria-label="SDBS Studio Development Home">
+          <span class="studio-name">SDBS Studio Development</span>
+        </a>
+        <button
+          class="nav-toggle"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+          aria-label="Toggle navigation menu"
+        >
+          <span class="hamburger"></span>
+        </button>
+        <nav id="primary-navigation" class="nav" role="navigation">
+          <ul class="nav-list">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/games/" class="nav-link">Games</a></li>
+            <li><a href="/news/" class="nav-link">News</a></li>
+            <li>
+              <a href="/career/" class="nav-link" aria-current="page">Career</a>
+            </li>
+            <li><a href="/about/" class="nav-link">About</a></li>
+            <li><a href="/contact/" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container main-content" role="main">
+      <h2 class="page-title">Career</h2>
+      <ul
+        class="career-list"
+        id="career-list"
+        aria-live="polite"
+        aria-label="Daftar lowongan pekerjaan"
+      >
+        <!-- Posisi karir akan di-render oleh JavaScript -->
+      </ul>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/scripts/footer.js"></script>
+    <script src="/scripts/nav-toggle.js"></script>
+    <script>
+      async function loadCareers() {
+        try {
+          const res = await fetch("/data/careers.json");
+          if (!res.ok) throw new Error("Gagal memuat data karir");
+          const careers = await res.json();
+
+          const careerList = document.getElementById("career-list");
+          careerList.innerHTML = "";
+
+          careers.forEach((job) => {
+            const li = document.createElement("li");
+            li.className = "career-item";
+            li.tabIndex = 0;
+
+            // Gabungkan skills jadi string
+            const skills = job.skills.join(", ");
+
+            li.innerHTML = `
+            <h3 class="career-position">${job.position}</h3>
+            <p class="career-description">${job.description}</p>
+            <p class="career-skills"><strong>Skills Required:</strong> ${skills}</p>
+            <p class="apply-info">Apply: Sorry <a href="mailto:${job.apply}" class="apply-email">${job.apply}</a></p>
+          `;
+            careerList.appendChild(li);
+          });
+        } catch (error) {
+          console.error(error);
+          const careerList = document.getElementById("career-list");
+          careerList.innerHTML =
+            '<li class="career-item">Error 404 Not Found.</li>';
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", loadCareers);
+    </script>
+  </body>
+</html>

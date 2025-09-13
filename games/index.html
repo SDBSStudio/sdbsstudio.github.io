@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SDBS Studio Development - Games</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="icon" type="image/x-icon" href="/assets/image/favicon.ico" />
+    <style>
+      /* Tambahan khusus halaman Games */
+      .main-content {
+        padding: 3rem 0 5rem;
+      }
+
+      h2.page-title {
+        font-weight: 700;
+        font-size: 2rem;
+        color: #1e3a8a;
+        margin-bottom: 2rem;
+        text-align: center;
+        opacity: 0;
+        animation: fadeInUp 1s forwards;
+      }
+
+      .games-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        opacity: 0;
+        animation: fadeInUp 1s 0.3s forwards;
+      }
+
+      .game-card {
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: default;
+      }
+
+      .game-card:hover,
+      .game-card:focus-within {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
+        outline: none;
+      }
+
+      .game-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        user-select: none;
+        pointer-events: none;
+      }
+
+      .game-content {
+        padding: 1.25rem 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .game-title {
+        font-size: 1.375rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-bottom: 0.5rem;
+        user-select: text;
+      }
+
+      .game-description {
+        font-size: 1rem;
+        color: #444;
+        flex-grow: 1;
+        margin-bottom: 1rem;
+        user-select: text;
+      }
+
+      .player-count {
+        font-weight: 600;
+        color: #222;
+        margin-bottom: 1rem;
+        user-select: none;
+      }
+
+      .btn-play {
+        background-color: #1e3a8a;
+        color: #fff;
+        font-weight: 600;
+        padding: 0.6rem 1.25rem;
+        border-radius: 30px;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgb(0 119 204 / 0.4);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        user-select: none;
+      }
+
+      .btn-play:hover,
+      .btn-play:focus {
+        background-color: #1e3a8a;
+        box-shadow: 0 6px 16px rgb(0 95 163 / 0.6);
+        outline: none;
+      }
+
+      /* Coming Soon Card */
+      .coming-soon {
+        color: #999;
+        font-style: italic;
+        font-weight: 600;
+        text-align: center;
+        padding: 1.5rem 0;
+        user-select: none;
+      }
+
+      /* Responsive */
+      @media (max-width: 480px) {
+        .game-image {
+          height: 140px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      <div class="container header-inner">
+        <a href="/" class="logo-link" aria-label="SDBS Studio Development Home">
+          <span class="studio-name">SDBS Studio Development</span>
+        </a>
+        <button
+          class="nav-toggle"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+          aria-label="Toggle navigation menu"
+        >
+          <span class="hamburger"></span>
+        </button>
+        <nav id="primary-navigation" class="nav" role="navigation">
+          <ul class="nav-list">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li>
+              <a href="/games/" class="nav-link" aria-current="page">Games</a>
+            </li>
+            <li><a href="/news/" class="nav-link">News</a></li>
+            <li><a href="/career/" class="nav-link">Career</a></li>
+            <li><a href="/about/" class="nav-link">About</a></li>
+            <li><a href="/contact/" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container main-content" role="main">
+      <h2 class="page-title">Our Games</h2>
+      <section
+        class="games-grid"
+        id="games-grid"
+        aria-live="polite"
+        aria-label="Daftar game SDBS Studio"
+      >
+        <!-- Game cards akan di-render oleh JavaScript -->
+      </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/scripts/footer.js"></script>
+    <script src="/scripts/nav-toggle.js"></script>
+    <script>
+      const activeGame = {
+        id: 4254316893,
+        title: "Indonesia City Driving",
+        description:
+          "Explore a city inspired by real Indonesian streets. Drive through realistic environments and experience local traffic.",
+        image: "/assets/image/incd.png",
+        url: "https://www.roblox.com/games/12032378909/Indonesia-City-Driving",
+      };
+
+      const comingSoonGames = [
+        // { title: "Mystery Island", image: "/assets/images/placeholder.jpg" },
+      ];
+
+      const gamesGrid = document.getElementById("games-grid");
+
+      // Ambil jumlah pemain online dari Vercel API
+      async function fetchPlayerCount(universeId) {
+        try {
+          const res = await fetch(
+            `https://sdbs-api.vercel.app/api/playercount?id=${universeId}`
+          );
+          const json = await res.json();
+          return json.count || 0;
+        } catch (err) {
+          console.warn("Gagal ambil player count:", err);
+          return 0;
+        }
+      }
+
+      // Render game aktif
+      async function renderActiveGame() {
+        const playerCount = await fetchPlayerCount(activeGame.id);
+        const card = document.createElement("article");
+        card.className = "game-card";
+        card.tabIndex = 0;
+        card.innerHTML = `
+    <img src="${activeGame.image}" alt="Screenshot game ${activeGame.title}" class="game-image" />
+    <div class="game-content">
+      <h3 class="game-title">${activeGame.title}</h3>
+      <p class="game-description">${activeGame.description}</p>
+      <p class="player-count" aria-live="polite">Players Online: <strong id="player-count">${playerCount}</strong></p>
+      <a href="${activeGame.url}" target="_blank" rel="noopener" class="btn-play" aria-label="Play ${activeGame.title} on Roblox">Play on Roblox</a>
+    </div>
+  `;
+        gamesGrid.appendChild(card);
+
+        // Update player count setiap 5 detik
+        setInterval(async () => {
+          const newCount = await fetchPlayerCount(activeGame.id);
+          const countEl = document.getElementById("player-count");
+          if (countEl) countEl.textContent = newCount;
+        }, 5000);
+      }
+
+      // Render coming soon cards
+      function renderComingSoon() {
+        comingSoonGames.forEach((game) => {
+          const card = document.createElement("article");
+          card.className = "game-card";
+          card.tabIndex = 0;
+          card.innerHTML = `
+      <img src="${game.image}" alt="Coming soon: ${game.title}" class="game-image" />
+      <div class="game-content">
+        <h3 class="game-title">${game.title}</h3>
+        <p class="coming-soon">Coming Soon</p>
+      </div>
+    `;
+          gamesGrid.appendChild(card);
+        });
+      }
+
+      // Inisialisasi render
+      renderActiveGame();
+      renderComingSoon();
+    </script>
+  </body>
+</html>
